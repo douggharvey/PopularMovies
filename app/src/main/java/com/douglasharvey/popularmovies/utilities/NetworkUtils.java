@@ -82,34 +82,13 @@ public class NetworkUtils {
         return postersURL + posterPath;
     }
 
+    // Reference: https://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html
+
     public static boolean isInternetAvailable(Context context) {
-        boolean connectivityResult = false;
-        if (isNetworkAvailable(context)) {
-            if (isOnline()) {
-                connectivityResult = true;
-            }
-        }
-        return connectivityResult;
-    }
-
-// Reference: https://guides.codepath.com/android/Sending-and-Managing-Network-Requests#checking-for-network-connectivity
-
-    private static Boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         @SuppressWarnings("ConstantConditions") NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-    private static boolean isOnline() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }
