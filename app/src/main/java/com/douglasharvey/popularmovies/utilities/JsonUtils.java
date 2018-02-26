@@ -11,10 +11,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class JsonUtils {
+final class JsonUtils {
     private static final String LOG_TAG = JsonUtils.class.getSimpleName();
 
-    public static List<Movie> getMovieStringsFromJson(String movieJsonStr) throws JSONException {
+    static List<Movie> getMovieStringsFromJson(String movieJsonStr) throws JSONException {
 
         final String JSON_STATUS_CODE = "status_code";
         final String JSON_RESULTS = "results";

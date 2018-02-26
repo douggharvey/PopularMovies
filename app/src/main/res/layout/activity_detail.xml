@@ -44,7 +44,7 @@
             tools:text="Title" />
 
         <View
-            android:id="@+id/horizontal_divider"
+            android:id="@+id/first_horizontal_divider"
             android:layout_width="0dp"
             android:layout_height="@dimen/divider_height"
             android:layout_marginTop="@dimen/vertical_margin_between_views"
@@ -61,7 +61,7 @@
             android:layout_marginTop="@dimen/vertical_margin_between_views"
             android:text="@string/release_date"
             app:layout_constraintStart_toStartOf="@+id/left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/horizontal_divider" />
+            app:layout_constraintTop_toBottomOf="@+id/first_horizontal_divider" />
 
         <TextView
             android:id="@+id/tv_release_date_data"
@@ -115,6 +115,68 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_overview_header"
             tools:text="This is the plot summary" />
 
+        <View
+            android:id="@+id/second_horizontal_divider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginTop="@dimen/vertical_margin_between_views"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="@id/right_guideline"
+            app:layout_constraintStart_toStartOf="@id/left_guideline"
+            app:layout_constraintTop_toBottomOf="@id/tv_synopsis_data" />
+
+        <TextView
+            android:id="@+id/tv_trailers_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/trailers"
+            android:layout_marginStart="@dimen/horizontal_margin_between_views"
+            android:layout_marginTop="@dimen/vertical_margin_between_views"
+            app:layout_constraintEnd_toStartOf="@id/right_guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/left_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/second_horizontal_divider"
+            />
+
+        <TextView
+            android:id="@+id/tv_trailers_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Trailer data"
+            android:layout_marginStart="@dimen/horizontal_margin_between_views"
+            android:layout_marginTop="@dimen/vertical_margin_between_views"
+            app:layout_constraintEnd_toStartOf="@id/right_guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/left_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_trailers_header"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_reviews_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/reviews"
+            android:layout_marginStart="@dimen/horizontal_margin_between_views"
+            android:layout_marginTop="@dimen/vertical_margin_between_views"
+            app:layout_constraintEnd_toStartOf="@id/right_guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/left_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_trailers_data"
+            />
+
+        <TextView
+            android:id="@+id/tv_reviews_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Review data"
+            android:layout_marginStart="@dimen/horizontal_margin_between_views"
+            android:layout_marginTop="@dimen/vertical_margin_between_views"
+            app:layout_constraintEnd_toStartOf="@id/right_guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/left_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reviews_header"
+            />
 
         <android.support.constraint.Guideline
             android:id="@+id/right_guideline"
