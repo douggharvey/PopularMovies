@@ -7,6 +7,7 @@
     <string name="vote_average">Vote Average:</string>
     <string name="release_date">Release Date:</string>
     <string name="EXTRA_SELECTED_MOVIE">com.douglasharvey.popularmovies.SELECTED_MOVIE</string>
+    <string name="MOVIES_SELECTION">"query</string>
     <string name="movie_poster">Movie Poster</string>
     <string name="trailers">Trailers</string>
     <string name="reviews">Reviews</string>

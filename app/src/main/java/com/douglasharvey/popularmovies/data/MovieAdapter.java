@@ -17,10 +17,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
+    private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
+
     public void setMoviesData(List<Movie> list) {
-        this.addAll(list);
+        if (list != null)
+            this.addAll(list);
     }
 
     public MovieAdapter(@NonNull Context context) {
@@ -29,7 +33,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
     @NonNull
     @Override
-    public View getView (int position, View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         final Movie movie = getItem(position);
 
         if (convertView == null) {
