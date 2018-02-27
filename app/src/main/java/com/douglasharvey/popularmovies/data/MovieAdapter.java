@@ -20,8 +20,6 @@ import java.util.List;
 
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
-    private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
-
     public void setMoviesData(List<Movie> list) {
         if (list != null)
             this.addAll(list);

@@ -12,7 +12,6 @@ import java.util.List;
 
 public class FetchMoviesLoader extends AsyncTaskLoader<List<Movie>> {
 
-    private final String LOG_TAG = FetchMoviesLoader.class.getSimpleName();
     private final Bundle args;
     private List<Movie> movieList;
 

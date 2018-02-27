@@ -25,9 +25,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int TOP_RATED = 1;
     private static final int POPULAR = 2;
-    public static final int MOVIES_LOADER = 1;
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    public static final String MENU_SELECTION = "menu_selection";
+    private static final int MOVIES_LOADER = 1;
+    private static final String MENU_SELECTION = "menu_selection";
     private MovieAdapter movieAdapter;
     private boolean restartLoader = false;
     private int selectionType;
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    //Loader
     private void callLoader(int selectionType) {
         Bundle queryBundle = new Bundle();
         queryBundle.putInt(getString(R.string.MOVIES_SELECTION), selectionType);
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements
         else loaderManager.initLoader(MOVIES_LOADER, queryBundle, this);
         restartLoader = false;
     }
-
 
     @Override
     public Loader<List<Movie>> onCreateLoader(int i, final Bundle bundle) {
@@ -87,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     // Menu
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
