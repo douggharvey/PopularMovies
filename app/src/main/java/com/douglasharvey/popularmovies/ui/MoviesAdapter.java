@@ -1,4 +1,4 @@
-package com.douglasharvey.popularmovies.data;
+package com.douglasharvey.popularmovies.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,21 +11,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.douglasharvey.popularmovies.R;
-import com.douglasharvey.popularmovies.ui.DetailActivity;
+import com.douglasharvey.popularmovies.data.Movie;
 import com.douglasharvey.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
-public class MovieAdapter extends ArrayAdapter<Movie> {
+class MoviesAdapter extends ArrayAdapter<Movie> {
 
     public void setMoviesData(List<Movie> list) {
         if (list != null)
             this.addAll(list);
     }
 
-    public MovieAdapter(@NonNull Context context) {
+    public MoviesAdapter(@NonNull Context context) {
         super(context, 0);
     }
 
@@ -42,7 +42,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
         //noinspection ConstantConditions
         Picasso.with(getContext())
-                .load(NetworkUtils.buildPosterFullPath(movie.getPosterPath()))
+                .load(NetworkUtils.buildFullPath(movie.getPosterPath()))
                 .placeholder(R.drawable.movie_placeholder)
                 .error(R.drawable.unable_to_load_poster)
                 .into(posterImageView);

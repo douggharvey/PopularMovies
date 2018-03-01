@@ -34,12 +34,12 @@ public class FetchMoviesLoader extends AsyncTaskLoader<List<Movie>> {
 
         int queryType = args.getInt(getContext().getString(R.string.MOVIES_SELECTION));
 
-        URL movieRequestUrl = NetworkUtils.buildUrl(queryType);
+        URL movieRequestUrl = NetworkUtils.buildUrl(queryType, null);
 
         try {
             String jsonMovieResponse = NetworkUtils
                     .getResponseFromHttpUrl(movieRequestUrl);
-            return JsonUtils.getMovieStringsFromJson(jsonMovieResponse);
+            return JsonMovieUtils.getMovieStringsFromJson(jsonMovieResponse);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.douglasharvey.popularmovies.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,6 @@ import android.widget.Toast;
 
 import com.douglasharvey.popularmovies.R;
 import com.douglasharvey.popularmovies.data.Movie;
-import com.douglasharvey.popularmovies.data.MovieAdapter;
 import com.douglasharvey.popularmovies.utilities.FetchMoviesLoader;
 import com.douglasharvey.popularmovies.utilities.NetworkUtils;
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final int POPULAR = 2;
     private static final int MOVIES_LOADER = 1;
     private static final String MENU_SELECTION = "menu_selection";
-    private MovieAdapter movieAdapter;
+    private MoviesAdapter moviesAdapter;
     private boolean restartLoader = false;
     private int selectionType;
 
@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements
 
     private void loadMovieData(int selectionType) {
         if (NetworkUtils.isInternetAvailable(this)) {
-            movieAdapter = new MovieAdapter(MainActivity.this);
+            moviesAdapter = new MoviesAdapter(MainActivity.this);
             GridView gridView = findViewById(R.id.gv_movie_list);
-            gridView.setAdapter(movieAdapter);
+            gridView.setAdapter(moviesAdapter);
             callLoader(selectionType);
         } else {
             Toast.makeText(this, R.string.internet_connectivity_error, Toast.LENGTH_LONG).show();
@@ -70,19 +70,20 @@ public class MainActivity extends AppCompatActivity implements
         restartLoader = false;
     }
 
+    @NonNull
     @Override
     public Loader<List<Movie>> onCreateLoader(int i, final Bundle bundle) {
         return new FetchMoviesLoader(this, bundle);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> movieData) {
-        movieAdapter.setMoviesData(movieData);
+    public void onLoadFinished(@NonNull Loader<List<Movie>> loader, List<Movie> movieData) {
+        moviesAdapter.setMoviesData(movieData);
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Movie>> loader) {
-        movieAdapter.setMoviesData(null);
+    public void onLoaderReset(@NonNull Loader<List<Movie>> loader) {
+        moviesAdapter.setMoviesData(null);
     }
 
     // Menu

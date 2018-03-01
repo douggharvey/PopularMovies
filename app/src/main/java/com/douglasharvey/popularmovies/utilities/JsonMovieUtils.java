@@ -11,8 +11,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-final class JsonUtils {
-    private static final String LOG_TAG = JsonUtils.class.getSimpleName();
+final class JsonMovieUtils {
+    private static final String LOG_TAG = JsonMovieUtils.class.getSimpleName();
 
     static List<Movie> getMovieStringsFromJson(String movieJsonStr) throws JSONException {
 
@@ -24,6 +24,8 @@ final class JsonUtils {
         final String JSON_POSTER_PATH = "poster_path";
         final String JSON_VOTE_AVERAGE = "vote_average";
         final String JSON_OVERVIEW = "overview";
+        final String JSON_ID = "id";
+        final String JSON_BACKDROP_PATH = "backdrop_path";
 
         ArrayList<Movie> parsedMovieData = new ArrayList<>();
 
@@ -43,8 +45,10 @@ final class JsonUtils {
                 String overview = resultObject.optString(JSON_OVERVIEW);
                 String posterPath = resultObject.optString(JSON_POSTER_PATH);
                 String voteAverage = resultObject.optString(JSON_VOTE_AVERAGE);
+                String id = resultObject.optString(JSON_ID);
+                String backDropPath = resultObject.optString(JSON_BACKDROP_PATH);
 
-                parsedMovieData.add(new Movie(title, release_date, posterPath, voteAverage, overview));
+                parsedMovieData.add(new Movie(title, release_date, posterPath, voteAverage, overview, id, backDropPath));
             }
         }
         return parsedMovieData;

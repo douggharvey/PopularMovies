@@ -5,19 +5,13 @@ import android.os.Parcelable;
 
 public class Movie implements Parcelable {
 
-    final private String title;
+    private final String title;
     private final String releaseDate;
     private final String posterPath;
     private final String voteAverage;
     private final String overview;
-
-    public Movie(String title, String releaseDate, String posterPath, String voteAverage, String overview) {
-        this.title = title;
-        this.releaseDate = releaseDate;
-        this.posterPath = posterPath;
-        this.voteAverage = voteAverage;
-        this.overview = overview;
-    }
+    private final String id;
+    private final String backdropPath;
 
     public String getTitle() {
         return title;
@@ -39,12 +33,33 @@ public class Movie implements Parcelable {
         return overview;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public Movie(String title, String releaseDate, String posterPath, String voteAverage, String overview, String id, String backdropPath) {
+
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+        this.voteAverage = voteAverage;
+        this.overview = overview;
+        this.id = id;
+        this.backdropPath = backdropPath;
+    }
+
     private Movie(Parcel in) {
         title = in.readString();
         releaseDate = in.readString();
         posterPath = in.readString();
         voteAverage = in.readString();
         overview = in.readString();
+        id = in.readString();
+        backdropPath = in.readString();
     }
 
     @Override
@@ -59,6 +74,8 @@ public class Movie implements Parcelable {
         dest.writeString(posterPath);
         dest.writeString(voteAverage);
         dest.writeString(overview);
+        dest.writeString(id);
+        dest.writeString(backdropPath);
     }
 
     @SuppressWarnings("unused")

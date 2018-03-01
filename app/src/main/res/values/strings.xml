@@ -8,7 +8,10 @@
     <string name="release_date">Release Date:</string>
     <string name="EXTRA_SELECTED_MOVIE">com.douglasharvey.popularmovies.SELECTED_MOVIE</string>
     <string name="MOVIES_SELECTION">"query</string>
+    <string name="MOVIE_ID">"movieId</string>
     <string name="movie_poster">Movie Poster</string>
     <string name="trailers">Trailers</string>
     <string name="reviews">Reviews</string>
+    <string name="trailer_image">trailerImage</string>
+    <string name="error_loading_youtube">ERROR: Unable to start video-check web browser and youtube app></string>
 </resources>
