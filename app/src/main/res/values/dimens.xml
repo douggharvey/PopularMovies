@@ -15,4 +15,8 @@
     <dimen name="play_button_size">25dp</dimen>
     <dimen name="backdrop_height">150dp</dimen>
     <dimen name="poster_margin">130dp</dimen>
+    <dimen name="trailer_card_view_corner_radius">10dp</dimen>
+    <dimen name="trailer_card_view_elevation">5dp</dimen>
+    <dimen name="video_name_height">50dp</dimen>
+    <dimen name="card_view_video_name_text_size">12sp</dimen>
 </resources>

@@ -29,8 +29,10 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
 
 
     public void setVideosData(List<Video> list) {
-        if (list != null)
+        if (list != null) {
             videoList = list;
+            notifyDataSetChanged();
+        }
     }
 
     public VideosAdapter(@NonNull Context context) {
@@ -51,12 +53,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         holder.video = videoList.get(position);
         holder.tvVideoName.setText(holder.video.getName());
 
-        //Image of video
-        Picasso.with(context)
-                .load("https://img.youtube.com/vi/" + holder.video.getKey() + "/0.jpg") //TODO refine this to utility
-                //.placeholder(R.drawable.movie_placeholder)
-                .error(R.drawable.unable_to_load_poster)
-                .into(holder.ivTrailer);
+        setImageForVideo(holder);
 
         holder.ivTrailer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +63,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
 
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -86,11 +84,19 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         }
     }
 
+    private void setImageForVideo(@NonNull ViewHolder holder) {
+        Picasso.with(context)
+                .load("https://img.youtube.com/vi/" + holder.video.getKey() + "/0.jpg")
+                //.placeholder(R.drawable.movie_placeholder) // decided not to use placeholder for this case
+                .error(R.drawable.unable_to_load_poster)
+                .into(holder.ivTrailer);
+    }
+
     // from https://stackoverflow.com/questions/574195/android-youtube-app-play-video-intent
     // https://stackoverflow.com/questions/15407502/how-to-check-if-an-intent-can-be-handled-from-some-activity
     // https://stackoverflow.com/questions/45144574/how-to-play-any-youtube-video-play-in-full-screen-in-android-app
     private static void watchYoutubeVideo(Context context, String id) {
-        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id)); //todo put link details elsewhere or at top of this logic
+        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
         PackageManager packageManager = context.getPackageManager();
         if (appIntent.resolveActivity(packageManager) != null) {
             appIntent.putExtra("force_fullscreen", true);

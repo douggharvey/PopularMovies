@@ -46,7 +46,6 @@ public class DetailActivity extends AppCompatActivity implements
     ImageView ivBackdrop;
     @BindView(R.id.rv_list_videos)
     RecyclerView rvListVideos;
-   // private List<Video> videoList = new ArrayList<>();
 
     private VideosAdapter videosAdapter;
 
@@ -61,7 +60,7 @@ public class DetailActivity extends AppCompatActivity implements
         if (receivedIntent.hasExtra(getString(R.string.EXTRA_SELECTED_MOVIE))) {
             Bundle data = receivedIntent.getExtras();
             @SuppressWarnings("ConstantConditions") final Movie movie = data.getParcelable(getString(R.string.EXTRA_SELECTED_MOVIE));
-            if (NetworkUtils.isInternetAvailable(this)) {
+            if (NetworkUtils.isInternetAvailable(this) && movie!= null) {
                 callVideoLoader(movie.getId());
             } else {
                 Toast.makeText(this, R.string.internet_connectivity_error, Toast.LENGTH_LONG).show();
@@ -92,7 +91,7 @@ public class DetailActivity extends AppCompatActivity implements
     private void setBackdropPath(Movie movie) {
         Picasso.with(DetailActivity.this)
                 .load(NetworkUtils.buildFullPath(movie.getBackdropPath()))
-                //.placeholder(R.drawable.movie_placeholder) // todo consider alternative - can I show progress wheel?
+                //.placeholder(R.drawable.movie_placeholder) // decided not to have placeholder for this case
                 .error(R.drawable.unable_to_load_poster)
                 .into(ivBackdrop);
     }
@@ -107,6 +106,7 @@ public class DetailActivity extends AppCompatActivity implements
 
     private void setupVideoList() {
         rvListVideos.addItemDecoration(new DividerItemDecoration(DetailActivity.this, LinearLayoutManager.HORIZONTAL));
+        rvListVideos.setHasFixedSize(true);
         rvListVideos.setLayoutManager(new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL, false));
         videosAdapter = new VideosAdapter(DetailActivity.this);
         rvListVideos.setAdapter(videosAdapter);

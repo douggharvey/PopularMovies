@@ -1,11 +1,13 @@
 package com.douglasharvey.popularmovies.data;
 
+@SuppressWarnings("unused")
 public class Video {
     private final String id;
     private final String key;
     private final String name;
     private final String type;
 
+    @SuppressWarnings("unused")
     public String getId() {
         return id;
     }
@@ -18,6 +20,7 @@ public class Video {
         return name;
     }
 
+    @SuppressWarnings("unused")
     public String getType() {
         return type;
     }
