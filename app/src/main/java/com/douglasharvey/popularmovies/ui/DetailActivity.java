@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.douglasharvey.popularmovies.R;
 import com.douglasharvey.popularmovies.data.Movie;
+import com.douglasharvey.popularmovies.data.Review;
 import com.douglasharvey.popularmovies.data.Video;
 import com.douglasharvey.popularmovies.utilities.DateUtils;
+import com.douglasharvey.popularmovies.utilities.FetchReviewsLoader;
 import com.douglasharvey.popularmovies.utilities.FetchVideosLoader;
 import com.douglasharvey.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
@@ -29,9 +31,11 @@ import butterknife.ButterKnife;
 
 @SuppressWarnings("WeakerAccess")
 public class DetailActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<List<Video>> {
+        LoaderManager.LoaderCallbacks {
+    private static final String LOG_TAG = DetailActivity.class.getSimpleName();
+    private static final int VIDEOS_LOADER = 2;
+    private static final int REVIEWS_LOADER = 3;
 
-    private static final int VIDEOS_LOADER = 1;
     @BindView(R.id.tv_movie_title)
     TextView tvMovieTitle;
     @BindView(R.id.iv_poster)
@@ -46,8 +50,11 @@ public class DetailActivity extends AppCompatActivity implements
     ImageView ivBackdrop;
     @BindView(R.id.rv_list_videos)
     RecyclerView rvListVideos;
+    @BindView(R.id.rv_list_reviews)
+    RecyclerView rvListReviews;
 
     private VideosAdapter videosAdapter;
+    private ReviewsAdapter reviewsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +67,12 @@ public class DetailActivity extends AppCompatActivity implements
         if (receivedIntent.hasExtra(getString(R.string.EXTRA_SELECTED_MOVIE))) {
             Bundle data = receivedIntent.getExtras();
             @SuppressWarnings("ConstantConditions") final Movie movie = data.getParcelable(getString(R.string.EXTRA_SELECTED_MOVIE));
-            if (NetworkUtils.isInternetAvailable(this) && movie!= null) {
-                callVideoLoader(movie.getId());
+            if (NetworkUtils.isInternetAvailable(this) && movie != null) {
+                Bundle queryBundle = new Bundle();
+                queryBundle.putString(getString(R.string.MOVIE_ID), movie.getId());
+                LoaderManager loaderManager = getSupportLoaderManager();
+                loaderManager.initLoader(VIDEOS_LOADER, queryBundle, this);
+                loaderManager.initLoader(REVIEWS_LOADER, queryBundle, this);
             } else {
                 Toast.makeText(this, R.string.internet_connectivity_error, Toast.LENGTH_LONG).show();
             }
@@ -79,7 +90,9 @@ public class DetailActivity extends AppCompatActivity implements
         setBackdropPath(movie);
         setPosterPath(movie);
         setupVideoList();
+        setupReviewList();
     }
+
 
     private void setTextViews(Movie movie) {
         tvMovieTitle.setText(movie.getTitle());
@@ -112,29 +125,41 @@ public class DetailActivity extends AppCompatActivity implements
         rvListVideos.setAdapter(videosAdapter);
     }
 
-    //Loader
-    private void callVideoLoader(String movieId) {
-        Bundle queryBundle = new Bundle();
-        queryBundle.putString(getString(R.string.MOVIE_ID), movieId);
-        LoaderManager loaderManager = getSupportLoaderManager();
-        loaderManager.initLoader(VIDEOS_LOADER, queryBundle, this);
+    private void setupReviewList() {
+        rvListReviews.addItemDecoration(new DividerItemDecoration(DetailActivity.this, LinearLayoutManager.VERTICAL));
+        rvListReviews.setHasFixedSize(true);
+        rvListReviews.setLayoutManager(new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.VERTICAL, false));
+        reviewsAdapter = new ReviewsAdapter(DetailActivity.this);
+        rvListReviews.setAdapter(reviewsAdapter);
     }
+
+    //Loaders
 
     @NonNull
     @Override
-    public Loader<List<Video>> onCreateLoader(int i, final Bundle bundle) {
-        return new FetchVideosLoader(this, bundle);
+    public Loader onCreateLoader(int i, final Bundle bundle) {
+        if (i == VIDEOS_LOADER) {
+            return new FetchVideosLoader(this, bundle);
+        } else {
+            return new FetchReviewsLoader(this, bundle);
+        }
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<List<Video>> loader, final List<Video> videoData) {
-        videosAdapter.setVideosData(videoData);
+    public void onLoadFinished(@NonNull Loader loader, Object data) {
+        if (loader.getId() == VIDEOS_LOADER) {
+            videosAdapter.setVideosData((List<Video>) data);
+        } else {
+            reviewsAdapter.setReviewsData((List<Review>) data);
+        }
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<List<Video>> loader) {
-        videosAdapter.setVideosData(null);
+    public void onLoaderReset(@NonNull Loader loader) {
+        if (loader.getId() == VIDEOS_LOADER) {
+            videosAdapter.setVideosData(null);
+        } else {
+            reviewsAdapter.setReviewsData(null);
+        }
     }
-
-
 }

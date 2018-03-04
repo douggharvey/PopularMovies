@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final int TOP_RATED = 1;
     private static final int POPULAR = 2;
+    public static final int FAVOURITES = 3;
     private static final int MOVIES_LOADER = 1;
     private static final String MENU_SELECTION = "menu_selection";
     private MoviesAdapter moviesAdapter;
@@ -40,7 +41,9 @@ public class MainActivity extends AppCompatActivity implements
         if (savedInstanceState != null) {
             selectionType = savedInstanceState.getInt(MENU_SELECTION);
         }
-        loadMovieData(selectionType);
+        loadMovieData(selectionType); //to do check if this is favourites
+
+
     }
 
     @Override
@@ -86,6 +89,11 @@ public class MainActivity extends AppCompatActivity implements
         moviesAdapter.setMoviesData(null);
     }
 
+
+    // Favourites
+    private void loadFavourites() {
+    }
+
     // Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,10 +105,18 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        if (selectionType == POPULAR) {
-            menu.findItem(R.id.action_popular).setChecked(true);
-        } else {
-            menu.findItem(R.id.action_toprated).setChecked(true);
+        switch (selectionType) {
+            case POPULAR:
+                menu.findItem(R.id.action_popular).setChecked(true);
+                break;
+            case TOP_RATED:
+                menu.findItem(R.id.action_toprated).setChecked(true);
+                break;
+            case FAVOURITES:
+                menu.findItem(R.id.action_favourites).setChecked(true);
+                break;
+            default:
+                Toast.makeText(this, "ERROR: OnPrepareOptionsMenu + selectionType: "+ selectionType + " not implemented.", Toast.LENGTH_LONG).show();
         }
 
         return true;
@@ -128,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements
             loadMovieData(selectionType);
             return true;
         }
+
+        if (id == R.id.action_favourites) {
+            selectionType = FAVOURITES;
+            loadFavourites();
+            return true;
+        }   
 
         return super.onOptionsItemSelected(item);
     }

@@ -1,6 +1,5 @@
 package com.douglasharvey.popularmovies.data;
 
-@SuppressWarnings("unused")
 public class Video {
     private final String id;
     private final String key;

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardCornerRadius="@dimen/trailer_card_view_corner_radius"
+    card_view:cardElevation="@dimen/trailer_card_view_elevation"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tv_review_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/reviews_author_left_margin"
+            android:textStyle="italic"
+            tools:text="Author" />
+
+        <TextView
+            android:id="@+id/tv_review_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/reviews_content_margins"
+            android:layout_marginEnd="@dimen/reviews_content_margins"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            tools:text="Review text" />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+

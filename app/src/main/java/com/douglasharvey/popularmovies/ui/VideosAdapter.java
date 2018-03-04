@@ -28,14 +28,14 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
     private final Context context;
 
 
-    public void setVideosData(List<Video> list) {
+    void setVideosData(List<Video> list) {
         if (list != null) {
             videoList = list;
             notifyDataSetChanged();
         }
     }
 
-    public VideosAdapter(@NonNull Context context) {
+    VideosAdapter(@NonNull Context context) {
         this.context = context;
     }
 
@@ -70,7 +70,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.ViewHolder
         return videoList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         Video video;
         @BindView(R.id.iv_trailer)
         ImageView ivTrailer;

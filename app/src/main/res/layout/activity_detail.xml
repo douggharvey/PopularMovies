@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.douglasharvey.popularmovies.ui.DetailActivity">
 
     <android.support.constraint.ConstraintLayout
@@ -191,36 +192,16 @@
             app:layout_constraintStart_toStartOf="@+id/left_guideline"
             app:layout_constraintTop_toBottomOf="@+id/third_horizontal_divider" />
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view"
-            android:layout_width="0dp"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list_reviews"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardBackgroundColor="@android:color/white"
-            card_view:cardCornerRadius="@dimen/trailer_card_view_corner_radius"
-            card_view:cardElevation="@dimen/trailer_card_view_elevation"
-            card_view:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toStartOf="@id/right_guideline"
-            app:layout_constraintStart_toStartOf="@+id/left_guideline"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@+id/tv_reviews_header"
-            >
-
-            <TextView
-                android:id="@+id/tv_reviews_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/horizontal_margin_between_views"
-                android:layout_marginTop="@dimen/vertical_margin_between_views"
-                android:ellipsize="end"
-                android:maxLines="5"
-                android:text="The minions are a nice idea and the animation and London recreation is really good, but that's about it. The script is boring and the jokes not really funny. This is the 4th sentence."
-                android:textSize="@dimen/card_view_video_name_text_size"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"
-                tools:text="Review data" />
-        </android.support.v7.widget.CardView>
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="@id/left_guideline"
+            app:layout_constraintTop_toBottomOf="@id/tv_reviews_header"
+            tools:listitem="@layout/list_item_reviews" />
 
         <android.support.constraint.Guideline
             android:id="@+id/right_guideline"
