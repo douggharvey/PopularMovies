@@ -19,20 +19,20 @@ import butterknife.BindView;
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
 
     private List<Review> reviewList = new ArrayList<>();
-    private final Context context;
+    @SuppressWarnings("unused")
     private static final String LOG_TAG = ReviewsAdapter.class.getSimpleName();
     private static final int DEFAULT_MAX_LINES = 5;
     private static final int MAXIMUM_LINES = 200;
 
-    public void setReviewsData(List<Review> list) {
+    void setReviewsData(List<Review> list) {
         if (list != null) {
             reviewList = list;
             notifyDataSetChanged();
         }
     }
 
-    public ReviewsAdapter(@NonNull Context context) {
-        this.context = context;
+    ReviewsAdapter(@NonNull Context context) {
+        @SuppressWarnings({"UnnecessaryLocalVariable", "unused"}) Context context1 = context;
     }
 
 
@@ -71,7 +71,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         return reviewList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         Review review;
 
         @BindView(R.id.tv_review_content)
@@ -79,7 +79,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         @BindView(R.id.tv_review_author)
         TextView tvReviewAuthor;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             tvReviewAuthor = view.findViewById(R.id.tv_review_author);
             tvReviewContent = view.findViewById(R.id.tv_review_content);

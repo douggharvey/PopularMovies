@@ -1,7 +1,12 @@
 package com.douglasharvey.popularmovies.data;
 
 public class Review {
+    private final String id;
+    private final String author;
+    private final String content;
+    private final String url;
 
+    @SuppressWarnings("unused")
     public String getId() {
         return id;
     }
@@ -27,8 +32,5 @@ public class Review {
         this.url = url;
     }
 
-    private String id;
-    private String author;
-    private String content;
-    private String url;
+
 }

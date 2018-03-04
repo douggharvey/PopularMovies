@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 @SuppressWarnings("WeakerAccess")
 public class DetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks {
+    @SuppressWarnings("unused")
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private static final int VIDEOS_LOADER = 2;
     private static final int REVIEWS_LOADER = 3;
@@ -148,8 +149,10 @@ public class DetailActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(@NonNull Loader loader, Object data) {
         if (loader.getId() == VIDEOS_LOADER) {
+            //noinspection unchecked
             videosAdapter.setVideosData((List<Video>) data);
         } else {
+            //noinspection unchecked
             reviewsAdapter.setReviewsData((List<Review>) data);
         }
     }
