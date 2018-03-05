@@ -22,6 +22,7 @@ import com.douglasharvey.popularmovies.utilities.DateUtils;
 import com.douglasharvey.popularmovies.utilities.FetchReviewsLoader;
 import com.douglasharvey.popularmovies.utilities.FetchVideosLoader;
 import com.douglasharvey.popularmovies.utilities.NetworkUtils;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,6 +54,8 @@ public class DetailActivity extends AppCompatActivity implements
     RecyclerView rvListVideos;
     @BindView(R.id.rv_list_reviews)
     RecyclerView rvListReviews;
+    @BindView(R.id.action_favourites)
+    MaterialFavoriteButton actionFavourites;
 
     private VideosAdapter videosAdapter;
     private ReviewsAdapter reviewsAdapter;
@@ -78,6 +81,16 @@ public class DetailActivity extends AppCompatActivity implements
                 Toast.makeText(this, R.string.internet_connectivity_error, Toast.LENGTH_LONG).show();
             }
             populateUI(movie);
+            actionFavourites.setOnFavoriteChangeListener(
+                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                        @Override
+                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                            if (favorite)
+                                Toast.makeText(DetailActivity.this, "Favourites true", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(DetailActivity.this, "Favourites false", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 

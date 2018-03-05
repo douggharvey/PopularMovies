@@ -21,4 +21,5 @@
     <dimen name="card_view_video_name_text_size">12sp</dimen>
     <dimen name="reviews_author_left_margin">8dp</dimen>
     <dimen name="reviews_content_margins">16dp</dimen>
+    <dimen name="favourite_button_margin">8dp</dimen>
 </resources>

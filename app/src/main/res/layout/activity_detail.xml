@@ -29,6 +29,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.github.ivbaranov.mfb.MaterialFavoriteButton
+            android:id="@+id/action_favourites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/favourite_button_margin"
+            app:mfb_color="white"
+            app:mfb_type="star"
+            app:mfb_size="72"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_backdrop"
+            app:layout_constraintTop_toBottomOf="@id/iv_backdrop"
+            app:layout_constraintEnd_toEndOf="@id/right_guideline" />
+
 
         <ImageView
             android:id="@+id/iv_poster"
