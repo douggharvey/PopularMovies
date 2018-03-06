@@ -1,8 +1,11 @@
 package com.douglasharvey.popularmovies.ui;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -12,21 +15,25 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.douglasharvey.popularmovies.R;
+import com.douglasharvey.popularmovies.data.FavouritesContract;
 import com.douglasharvey.popularmovies.data.Movie;
 import com.douglasharvey.popularmovies.utilities.FetchMoviesLoader;
 import com.douglasharvey.popularmovies.utilities.NetworkUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<List<Movie>> {
-
+        LoaderManager.LoaderCallbacks {
+    @SuppressWarnings("unused")
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int TOP_RATED = 1;
     private static final int POPULAR = 2;
     private static final int FAVOURITES = 3;
     private static final int MOVIES_LOADER = 1;
+    private static final int FAVOURITES_LOADER = 2;
     private static final String MENU_SELECTION = "menu_selection";
     private MoviesAdapter moviesAdapter;
     private boolean restartLoader = false;
@@ -41,9 +48,7 @@ public class MainActivity extends AppCompatActivity implements
         if (savedInstanceState != null) {
             selectionType = savedInstanceState.getInt(MENU_SELECTION);
         }
-        loadMovieData(selectionType); //to do check if this is favourites
-
-
+        loadMovieData(selectionType);
     }
 
     @Override
@@ -53,46 +58,91 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void loadMovieData(int selectionType) {
-        if (NetworkUtils.isInternetAvailable(this)) {
-            moviesAdapter = new MoviesAdapter(MainActivity.this);
-            GridView gridView = findViewById(R.id.gv_movie_list);
-            gridView.setAdapter(moviesAdapter);
-            callLoader(selectionType);
-        } else {
-            Toast.makeText(this, R.string.internet_connectivity_error, Toast.LENGTH_LONG).show();
+        moviesAdapter = new MoviesAdapter(MainActivity.this);
+        GridView gridView = findViewById(R.id.gv_movie_list);
+        gridView.setAdapter(moviesAdapter);
+
+        selectionType = checkForOffLineMode(selectionType);
+        callLoader(selectionType);
+    }
+
+    private int checkForOffLineMode(int selectionType) {
+        if (!NetworkUtils.isInternetAvailable(this)) {
+            Toast.makeText(this, R.string.error_internet_connectivity, Toast.LENGTH_SHORT).show();
+            selectionType = FAVOURITES;
         }
+        return selectionType;
     }
 
     //Loader
     private void callLoader(int selectionType) {
+        int loaderId;
         Bundle queryBundle = new Bundle();
         queryBundle.putInt(getString(R.string.MOVIES_SELECTION), selectionType);
         LoaderManager loaderManager = getSupportLoaderManager();
-        if (restartLoader) loaderManager.restartLoader(MOVIES_LOADER, queryBundle, this);
-        else loaderManager.initLoader(MOVIES_LOADER, queryBundle, this);
+        if (selectionType == FAVOURITES) {
+            loaderId = FAVOURITES_LOADER;
+        } else {
+            loaderId = MOVIES_LOADER;
+        }
+        if (restartLoader) loaderManager.restartLoader(loaderId, queryBundle, this);
+        else loaderManager.initLoader(loaderId, queryBundle, this);
+
         restartLoader = false;
     }
 
     @NonNull
     @Override
-    public Loader<List<Movie>> onCreateLoader(int i, final Bundle bundle) {
-        return new FetchMoviesLoader(this, bundle);
+    public Loader onCreateLoader(int loaderId, final Bundle bundle) {
+        switch (loaderId) {
+            case MOVIES_LOADER:
+                return new FetchMoviesLoader(this, bundle);
+            case FAVOURITES_LOADER:
+                Uri favouritesQueryUri = FavouritesContract.FavouritesEntry.CONTENT_URI;
+                return new CursorLoader(this,
+                        favouritesQueryUri,
+                        null,
+                        null,
+                        null,
+                        null);
+            default:
+                throw new RuntimeException("Loader Not Implemented: " + loaderId);
+        }
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<List<Movie>> loader, List<Movie> movieData) {
-        moviesAdapter.setMoviesData(movieData);
+    public void onLoadFinished(@NonNull Loader loader, Object data) {
+        switch (loader.getId()) {
+            case MOVIES_LOADER:
+                moviesAdapter.setMoviesData((List<Movie>) data);
+                break;
+            case FAVOURITES_LOADER:
+                Cursor cursor = (Cursor) data;
+                if (cursor.getCount() == 0)
+                    Toast.makeText(this, R.string.no_favourites_message, Toast.LENGTH_SHORT).show();
+                List<Movie> movieData = new ArrayList<>();
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    movieData.add(new Movie(
+                                    cursor.getString(cursor.getColumnIndex(FavouritesContract.FavouritesEntry.COLUMN_NAME_TITLE)),
+                                    cursor.getString(cursor.getColumnIndex(FavouritesContract.FavouritesEntry.COLUMN_NAME_RELEASE_DATE)),
+                                    cursor.getString(cursor.getColumnIndex(FavouritesContract.FavouritesEntry.COLUMN_NAME_POSTER)),
+                                    cursor.getString(cursor.getColumnIndex(FavouritesContract.FavouritesEntry.COLUMN_NAME_VOTE_AVERAGE)),
+                                    cursor.getString(cursor.getColumnIndex(FavouritesContract.FavouritesEntry.COLUMN_NAME_SYNOPSIS)),
+                                    cursor.getString(cursor.getColumnIndex(FavouritesContract.FavouritesEntry._ID)),
+                                    cursor.getString(cursor.getColumnIndex(FavouritesContract.FavouritesEntry.COLUMN_NAME_BACKDROP))
+                            )
+                    );
+                    cursor.moveToNext();
+                }
+                moviesAdapter.setMoviesData(movieData);
+                break;
+        }
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<List<Movie>> loader) {
+    public void onLoaderReset(@NonNull Loader loader) {
         moviesAdapter.setMoviesData(null);
-    }
-
-
-    // Favourites
-    @SuppressWarnings("EmptyMethod")
-    private void loadFavourites() {
     }
 
     // Menu
@@ -106,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        selectionType = checkForOffLineMode(selectionType);
         switch (selectionType) {
             case POPULAR:
                 menu.findItem(R.id.action_popular).setChecked(true);
@@ -117,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements
                 menu.findItem(R.id.action_favourites).setChecked(true);
                 break;
             default:
-                Toast.makeText(this, "ERROR: OnPrepareOptionsMenu + selectionType: "+ selectionType + " not implemented.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.error_selection_type_not_implemented) + selectionType + " not implemented.", Toast.LENGTH_LONG).show();
         }
 
         return true;
@@ -147,10 +198,11 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         if (id == R.id.action_favourites) {
+            restartLoader = true;
             selectionType = FAVOURITES;
-            loadFavourites();
+            loadMovieData(selectionType);
             return true;
-        }   
+        }
 
         return super.onOptionsItemSelected(item);
     }

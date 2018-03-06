@@ -29,6 +29,11 @@
             android:label=""
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.ActionBar.Transparent" />
+
+        <provider
+            android:name=".data.FavouritesProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false" />
     </application>
 
 </manifest>

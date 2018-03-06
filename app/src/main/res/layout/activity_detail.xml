@@ -37,6 +37,7 @@
             app:mfb_color="white"
             app:mfb_type="star"
             app:mfb_size="72"
+            app:mfb_animate_favorite="false"
             app:layout_constraintBottom_toBottomOf="@+id/iv_backdrop"
             app:layout_constraintTop_toBottomOf="@id/iv_backdrop"
             app:layout_constraintEnd_toEndOf="@id/right_guideline" />

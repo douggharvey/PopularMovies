@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.util.Log;
 
 import com.douglasharvey.popularmovies.BuildConfig;
 
@@ -61,7 +60,6 @@ public class NetworkUtils {
         URL url = null;
         try {
             url = new URL(builtUri.toString());
-            Log.d("NetworkUtils", "buildUrl: " + builtUri);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

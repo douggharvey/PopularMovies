@@ -2,7 +2,6 @@
     <string name="app_name">Popular Movies</string>
     <string name="menu_item_popular">Popular</string>
     <string name="menu_item_top_rated">Top-rated</string>
-    <string name="internet_connectivity_error">ERROR: Please check your Internet Connection</string>
     <string name="synopsis">Synopsis</string>
     <string name="vote_average">Vote Average:</string>
     <string name="release_date">Release Date:</string>
@@ -15,4 +14,10 @@
     <string name="trailer_image">trailerImage</string>
     <string name="error_loading_youtube">ERROR: Unable to start video-check web browser and youtube app></string>
     <string name="favourites">Favourites</string>
+    <string name="content_authority">com.douglasharvey.popularmovies</string>
+    <string name="add_to_favourites_message">Added to Favourites</string>
+    <string name="removed_from_favourites_message">Removed from Favourites</string>
+    <string name="error_internet_connectivity">Internet connection unavailable-OFFLINE FAVOURITES mode enabled</string>
+    <string name="error_selection_type_not_implemented">ERROR: OnPrepareOptionsMenu + selectionType:</string>
+    <string name="no_favourites_message">No Favourites to display</string>
 </resources>

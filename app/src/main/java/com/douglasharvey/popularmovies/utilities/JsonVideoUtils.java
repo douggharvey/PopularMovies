@@ -43,7 +43,7 @@ final class JsonVideoUtils {
                 String name = resultObject.optString(JSON_NAME);
                 String type = resultObject.optString(JSON_TYPE);
 
-                parsedVideoData.add(new Video(id, key, name, type));
+                if (type.equals("Trailer")) parsedVideoData.add(new Video(id, key, name, type));
             }
         }
         return parsedVideoData;

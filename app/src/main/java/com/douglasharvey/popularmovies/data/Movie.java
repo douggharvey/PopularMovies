@@ -17,6 +17,19 @@ public class Movie implements Parcelable {
         return title;
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "title='" + title + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", posterPath='" + posterPath + '\'' +
+                ", voteAverage='" + voteAverage + '\'' +
+                ", overview='" + overview + '\'' +
+                ", id='" + id + '\'' +
+                ", backdropPath='" + backdropPath + '\'' +
+                '}';
+    }
+
     public String getReleaseDate() {
         return releaseDate;
     }

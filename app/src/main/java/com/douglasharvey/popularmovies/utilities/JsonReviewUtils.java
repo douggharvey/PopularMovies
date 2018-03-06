@@ -44,7 +44,6 @@ final class JsonReviewUtils {
                 String url = resultObject.optString(JSON_URL);
 
                 parsedReviewData.add(new Review(id, author, content, url));
-                Log.d(LOG_TAG, "getReviewStringsFromJson: " + content);
             }
         }
         return parsedReviewData;
