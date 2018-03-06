@@ -1,4 +1,4 @@
-# Udacity NanoDegree - 2nd Project - Popular Movies Stage 1
+# Udacity NanoDegree - 2nd Project - Popular Movies Stage 2
 
 Access Movie DB API to view popular and top-rated movies.
 

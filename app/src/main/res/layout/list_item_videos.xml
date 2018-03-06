@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardCornerRadius="@dimen/trailer_card_view_corner_radius"
+    card_view:cardElevation="@dimen/trailer_card_view_elevation"
+    card_view:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_trailer"
+            android:layout_width="@dimen/trailer_width"
+            android:layout_height="@dimen/trailer_height"
+            android:layout_margin="@dimen/trailer_margin"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/trailer_image"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/movie_placeholder" />
+
+        <ImageView
+            android:id="@+id/iv_play_button_image"
+            android:layout_width="@dimen/play_button_size"
+            android:layout_height="@dimen/play_button_size"
+            app:layout_constraintBottom_toTopOf="@id/iv_trailer"
+            app:layout_constraintEnd_toEndOf="@id/iv_trailer"
+            app:layout_constraintStart_toStartOf="@id/iv_trailer"
+            app:layout_constraintTop_toBottomOf="@+id/iv_trailer"
+            app:srcCompat="@drawable/youtube_play_button_transparent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_video_name"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/video_name_height"
+            android:layout_margin="@dimen/trailer_margin"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textSize="@dimen/card_view_video_name_text_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/iv_trailer"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/iv_trailer"
+            app:layout_constraintTop_toBottomOf="@+id/iv_trailer"
+            tools:text="Video Name" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
+
