@@ -50,9 +50,8 @@ public class MainActivity extends AppCompatActivity implements
         }
         if (!NetworkUtils.isInternetAvailable(this)) {
             Toast.makeText(this, R.string.error_internet_connectivity, Toast.LENGTH_SHORT).show();
-          //  selectionType=FAVOURITES;
-            loadMovieData(selectionType);
         }
+        loadMovieData(selectionType);
     }
 
     @Override
@@ -81,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements
             loaderId = MOVIES_LOADER;
             loaderManager.destroyLoader(FAVOURITES_LOADER); // Prevent 2nd loader from running.
         }
-        Loader<String> loader = loaderManager.getLoader(loaderId);
-        if ((restartLoader) || loader == null) {
+        //Loader<String> loader = loaderManager.getLoader(loaderId);
+        if (restartLoader) {
             loaderManager.restartLoader(loaderId, queryBundle, this);
         } else {
             loaderManager.initLoader(loaderId, queryBundle, this);
