@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import com.douglasharvey.popularmovies.data.FavouritesContract.FavouritesEntry;
 
 
+@SuppressWarnings("ConstantConditions")
 public class FavouritesProvider extends ContentProvider {
 
     @SuppressWarnings("unused")

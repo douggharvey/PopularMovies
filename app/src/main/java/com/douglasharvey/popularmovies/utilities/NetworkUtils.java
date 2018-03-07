@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class NetworkUtils {
+    @SuppressWarnings("unused")
+    private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
 
     private static final String MOVIES_BASE_URL =
             "http://api.themoviedb.org/3/movie/";
@@ -36,7 +38,7 @@ public class NetworkUtils {
 
     private static final String API_KEY = BuildConfig.API_KEY;
 
-    public static URL buildUrl(int queryType, String movieId) {
+    static URL buildUrl(int queryType, String movieId) {
         String queryTypeString = TOP_RATED;
         switch (queryType) {
             case 1:
@@ -67,7 +69,7 @@ public class NetworkUtils {
         return url;
     }
 
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
+    static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();

@@ -3,7 +3,6 @@ package com.douglasharvey.popularmovies.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,20 +19,17 @@ import java.util.List;
 
 
 class MoviesAdapter extends ArrayAdapter<Movie> {
+    @SuppressWarnings("unused")
     private static final String LOG_TAG = MoviesAdapter.class.getSimpleName();
 
-    public void setMoviesData(List<Movie> list) {
+    void setMoviesData(List<Movie> list) {
         if (list != null) {
             this.clear();
             this.addAll(list);
         }
-        else
-        {
-            Log.d(LOG_TAG, "setMoviesData: list is null");
-        }
     }
 
-    public MoviesAdapter(@NonNull Context context) {
+    MoviesAdapter(@NonNull Context context) {
         super(context, 0);
     }
 

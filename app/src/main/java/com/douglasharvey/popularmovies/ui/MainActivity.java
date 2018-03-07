@@ -48,7 +48,11 @@ public class MainActivity extends AppCompatActivity implements
         if (savedInstanceState != null) {
             selectionType = savedInstanceState.getInt(MENU_SELECTION);
         }
-        loadMovieData(selectionType);
+        if (!NetworkUtils.isInternetAvailable(this)) {
+            Toast.makeText(this, R.string.error_internet_connectivity, Toast.LENGTH_SHORT).show();
+          //  selectionType=FAVOURITES;
+            loadMovieData(selectionType);
+        }
     }
 
     @Override
@@ -61,17 +65,7 @@ public class MainActivity extends AppCompatActivity implements
         moviesAdapter = new MoviesAdapter(MainActivity.this);
         GridView gridView = findViewById(R.id.gv_movie_list);
         gridView.setAdapter(moviesAdapter);
-
-        selectionType = checkForOffLineMode(selectionType);
         callLoader(selectionType);
-    }
-
-    private int checkForOffLineMode(int selectionType) {
-        if (!NetworkUtils.isInternetAvailable(this)) {
-            Toast.makeText(this, R.string.error_internet_connectivity, Toast.LENGTH_SHORT).show();
-            selectionType = FAVOURITES;
-        }
-        return selectionType;
     }
 
     //Loader
@@ -82,11 +76,17 @@ public class MainActivity extends AppCompatActivity implements
         LoaderManager loaderManager = getSupportLoaderManager();
         if (selectionType == FAVOURITES) {
             loaderId = FAVOURITES_LOADER;
+            loaderManager.destroyLoader(MOVIES_LOADER); // Prevent 2nd loader from running.
         } else {
             loaderId = MOVIES_LOADER;
+            loaderManager.destroyLoader(FAVOURITES_LOADER); // Prevent 2nd loader from running.
         }
-        if (restartLoader) loaderManager.restartLoader(loaderId, queryBundle, this);
-        else loaderManager.initLoader(loaderId, queryBundle, this);
+        Loader<String> loader = loaderManager.getLoader(loaderId);
+        if ((restartLoader) || loader == null) {
+            loaderManager.restartLoader(loaderId, queryBundle, this);
+        } else {
+            loaderManager.initLoader(loaderId, queryBundle, this);
+        }
 
         restartLoader = false;
     }
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onLoadFinished(@NonNull Loader loader, Object data) {
         switch (loader.getId()) {
             case MOVIES_LOADER:
+                //noinspection unchecked
                 moviesAdapter.setMoviesData((List<Movie>) data);
                 break;
             case FAVOURITES_LOADER:
@@ -156,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        selectionType = checkForOffLineMode(selectionType);
         switch (selectionType) {
             case POPULAR:
                 menu.findItem(R.id.action_popular).setChecked(true);

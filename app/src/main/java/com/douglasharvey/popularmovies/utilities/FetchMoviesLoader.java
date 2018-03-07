@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.List;
 
 public class FetchMoviesLoader extends AsyncTaskLoader<List<Movie>> {
+    @SuppressWarnings("unused")
+    private static final String LOG_TAG = FetchMoviesLoader.class.getSimpleName();
 
     private final Bundle args;
     private List<Movie> movieList;
@@ -31,7 +33,6 @@ public class FetchMoviesLoader extends AsyncTaskLoader<List<Movie>> {
 
     @Override
     public List<Movie> loadInBackground() {
-
         int queryType = args.getInt(getContext().getString(R.string.MOVIES_SELECTION));
 
         URL movieRequestUrl = NetworkUtils.buildUrl(queryType, null);

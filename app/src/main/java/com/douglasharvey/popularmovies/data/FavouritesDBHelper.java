@@ -33,7 +33,7 @@ class FavouritesDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FavouritesEntry.TABLE_FAVOURITES);
-        onCreate(sqLiteDatabase);
+        // currently not implemented
+        // if an upgrade is required, then follow principles according to https://thebhwgroup.com/blog/how-android-sqlite-onupgrade
     }
 }

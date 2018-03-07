@@ -78,19 +78,15 @@ public class DetailActivity extends AppCompatActivity implements
 
         if (receivedIntent.hasExtra(getString(R.string.EXTRA_SELECTED_MOVIE))) {
             Bundle data = receivedIntent.getExtras();
+            //noinspection ConstantConditions
             movie = data.getParcelable(getString(R.string.EXTRA_SELECTED_MOVIE));
             Bundle queryBundle = new Bundle();
             queryBundle.putString(getString(R.string.MOVIE_ID), movie.getId());
             if (movie != null) {
                 LoaderManager loaderManager = getSupportLoaderManager();
                 loaderManager.initLoader(FAVOURITES_LOADER, queryBundle, this);
-
-                if (NetworkUtils.isInternetAvailable(this)) {
-                    loaderManager.initLoader(VIDEOS_LOADER, queryBundle, this);
-                    loaderManager.initLoader(REVIEWS_LOADER, queryBundle, this);
-                } else {
-                    Toast.makeText(this, R.string.error_internet_connectivity, Toast.LENGTH_SHORT).show();
-                }
+                loaderManager.initLoader(VIDEOS_LOADER, queryBundle, this);
+                loaderManager.initLoader(REVIEWS_LOADER, queryBundle, this);
             }
             populateUI();
         }
@@ -207,9 +203,11 @@ public class DetailActivity extends AppCompatActivity implements
     public void onLoadFinished(@NonNull Loader loader, Object data) {
         switch (loader.getId()) {
             case VIDEOS_LOADER:
+                //noinspection unchecked
                 videosAdapter.setVideosData((List<Video>) data);
                 break;
             case REVIEWS_LOADER:
+                //noinspection unchecked
                 reviewsAdapter.setReviewsData((List<Review>) data);
                 break;
             case FAVOURITES_LOADER:
