@@ -1,5 +1,6 @@
 package com.douglasharvey.popularmovies.ui;
 
+import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -104,20 +105,33 @@ public class DetailActivity extends AppCompatActivity implements
         contentValues.put(FavouritesContract.FavouritesEntry.COLUMN_NAME_SYNOPSIS, movie.getOverview());
         contentValues.put(FavouritesContract.FavouritesEntry.COLUMN_NAME_VOTE_AVERAGE, movie.getVoteAverage());
 
-        Uri uri = getContentResolver().insert(FavouritesContract.FavouritesEntry.CONTENT_URI, contentValues);
-        if (uri != null) {
-            Toast.makeText(DetailActivity.this, R.string.add_to_favourites_message, Toast.LENGTH_SHORT).show();
-        }
+        AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onInsertComplete(int token, Object cookie, Uri uri) {
+                super.onInsertComplete(token, cookie, uri);
+                Toast.makeText(DetailActivity.this, R.string.add_to_favourites_message, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        asyncQueryHandler.startInsert(1, null, FavouritesContract.FavouritesEntry.CONTENT_URI, contentValues);
 
     }
 
     private void removeFavourites() {
         Uri uri = FavouritesContract.FavouritesEntry.CONTENT_URI;
         uri = uri.buildUpon().appendPath(movie.getId()).build();
-        int rowsDeleted = getContentResolver().delete(uri, null, null);
-        if (rowsDeleted == 1) {
-            Toast.makeText(DetailActivity.this, R.string.removed_from_favourites_message, Toast.LENGTH_SHORT).show();
-        }
+
+        AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onDeleteComplete(int token, Object cookie, int rowsDeleted) {
+                super.onDeleteComplete(token, cookie, rowsDeleted);
+                if (rowsDeleted == 1) {
+                    Toast.makeText(DetailActivity.this, R.string.removed_from_favourites_message, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        asyncQueryHandler.startDelete(2,null,uri, null, null);
     }
 
     private void setStatusBarTranslucent() {
