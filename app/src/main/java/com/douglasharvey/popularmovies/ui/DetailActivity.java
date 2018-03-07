@@ -1,5 +1,6 @@
 package com.douglasharvey.popularmovies.ui;
 
+import android.annotation.SuppressLint;
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -105,7 +106,7 @@ public class DetailActivity extends AppCompatActivity implements
         contentValues.put(FavouritesContract.FavouritesEntry.COLUMN_NAME_SYNOPSIS, movie.getOverview());
         contentValues.put(FavouritesContract.FavouritesEntry.COLUMN_NAME_VOTE_AVERAGE, movie.getVoteAverage());
 
-        AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+        @SuppressLint("HandlerLeak") AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
             @Override
             protected void onInsertComplete(int token, Object cookie, Uri uri) {
                 super.onInsertComplete(token, cookie, uri);
@@ -121,7 +122,7 @@ public class DetailActivity extends AppCompatActivity implements
         Uri uri = FavouritesContract.FavouritesEntry.CONTENT_URI;
         uri = uri.buildUpon().appendPath(movie.getId()).build();
 
-        AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
+        @SuppressLint("HandlerLeak") AsyncQueryHandler asyncQueryHandler = new AsyncQueryHandler(getContentResolver()) {
             @Override
             protected void onDeleteComplete(int token, Object cookie, int rowsDeleted) {
                 super.onDeleteComplete(token, cookie, rowsDeleted);
