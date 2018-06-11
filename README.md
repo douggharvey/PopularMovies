@@ -1,6 +1,6 @@
 # Popular Movies (UDACITY Android Developer Nanodegree)
 
-![](https://imgur.com/t2eJ75U.gif)
+![](https://imgur.com/EQx0b4y.gif)
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE.txt)[![Platform Android](https://img.shields.io/badge/platform-Android-blue.svg)](https://www.android.com)
 
