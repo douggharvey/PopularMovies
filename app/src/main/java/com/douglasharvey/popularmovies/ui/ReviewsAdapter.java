@@ -54,10 +54,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 // expand & collapse on individual items
-                if (holder.tvReviewContent.getMaxLines()==DEFAULT_MAX_LINES) {
+                if (holder.tvReviewContent.getMaxLines() == DEFAULT_MAX_LINES) {
                     holder.tvReviewContent.setMaxLines(MAXIMUM_LINES);
-                }
-                else {holder.tvReviewContent.setMaxLines(DEFAULT_MAX_LINES);
+                } else {
+                    holder.tvReviewContent.setMaxLines(DEFAULT_MAX_LINES);
                 }
                 notifyDataSetChanged(); // tried notifyItemChanged(position) but only worked on the second click??
             }
